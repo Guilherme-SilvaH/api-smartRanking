@@ -17,6 +17,11 @@ export class JogadoresService {
 
     }
 
+    //metodo
+    async consultarTodosJogadores(): Promise<Jogador[]>{
+        return await this.jogadores
+    }
+
     //aqui vamos criar o jogador completo, preenchendo os dados que o backend preenche sozinho, e os dados que o usuario preenche(nome,phoneNumber,email)
     private criar(criaJogadorDto: CriarJogadorDto) : void{   //recebemos como paramentro criaJogadorDto que é do tipo CriarJogadorDto
         
