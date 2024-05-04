@@ -30,7 +30,7 @@ export class JogadoresService {
 
     //metodo
     async consultarTodosJogadores(): Promise<Jogador[]>{
-        return await this.jogadores
+        return this.jogadores
     }
 
 
@@ -40,6 +40,12 @@ export class JogadoresService {
             throw new NotFoundException(`Jogador com e-mail ${email} não encontrado`)
         }
         return jogadorEncontrado
+    }
+
+
+    async deletarJogador(email: string): Promise<void>{
+        const jogadorEncontrado = this.jogadores.find(jogador => jogador.email === email)
+        this.jogadores = this.jogadores.filter(jogador => jogador.email !== jogadorEncontrado.email)
     }
 
     //aqui vamos criar o jogador completo, preenchendo os dados que o backend preenche sozinho, e os dados que o usuario preenche(nome,phoneNumber,email)
