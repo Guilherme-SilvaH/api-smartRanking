@@ -178,3 +178,10 @@ export class UserController {
 
 # Criar um Service
 nest g service "nome do Service"
+
+
+# Intalar o mongoose atraves do Nest
+npm install @nestjs/mongoose mongoose 
+
+# Intalar types do mongoose
+npm install --save-dev @types/mongoose
