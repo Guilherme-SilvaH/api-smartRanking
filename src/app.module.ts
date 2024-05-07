@@ -4,8 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://admin:93929136gGui@cluster0.gj5iy6p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
-    ),
+    MongooseModule.forRoot('mongodb+srv://admin:93929136gGui@cluster0.gj5iy6p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',),
     JogadoresModule],
   controllers: [],
   providers: [],
