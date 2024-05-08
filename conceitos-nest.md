@@ -236,5 +236,14 @@ export class CatsController {
   }
 }
     </code></pre>
+
+    <h1>
+        Comando para instalar Alguns Pipes
+      <ul>
+        <li>
+             npm install class-validator class-transformer
+        </li>
+      </ul>
+    </h1>
 </body>
 </html>
