@@ -11,24 +11,17 @@ import { promises } from 'dns';
 @Injectable()
 export class JogadoresService {
     constructor(@InjectModel('Jogador') private readonly jogadorModel: Model<Jogador>){}
+
     //metodo
     async criarAtualizarJogador(CriaJogadorDto: CriarJogadorDto): Promise<void>{
-
         const { email } = CriaJogadorDto
-        
         //const jogadorEncontrado = this.jogadores.find(jogador => jogador.email === email)
-
-
         const jogadorEncontrado = this.jogadorModel.findOne({ email }).exec();
-
-
         if(jogadorEncontrado){
             this.atualizar(CriaJogadorDto)
         }else{
             this.criar(CriaJogadorDto)
         }
-
-
     }
 
     //metodo
@@ -37,9 +30,7 @@ export class JogadoresService {
         return await this.jogadorModel.find().exec();
     }
 
-
     async consultarJogadoresPeloEmail(email: string): Promise<Jogador>{
-       
         const jogadorEncontrado = this.jogadorModel.findOne({ email }).exec();
         if (!jogadorEncontrado) {
             throw new NotFoundException(`Jogador com e-mail ${email} não encontrado`)
@@ -55,7 +46,6 @@ export class JogadoresService {
         */
        return await this.jogadorModel.deleteOne({email}).exec();
     }
-
 
     //aqui vamos criar o jogador completo, preenchendo os dados que o backend preenche sozinho, e os dados que o usuario preenche(nome,phoneNumber,email)
     private  async criar(criaJogadorDto: CriarJogadorDto) : Promise<Jogador>{   //recebemos como paramentro criaJogadorDto que é do tipo CriarJogadorDto
@@ -85,13 +75,8 @@ export class JogadoresService {
     }
         */
     }
-
-    private  async atualizar(criarJogadorDto: CriarJogadorDto): Promise<Jogador>{
-        return await this.jogadorModel.findOneAndUpdate({email:criarJogadorDto},
-        {$set: criarJogadorDto}).exec()
-        /*
-        const {nome} = criarJogadorDto
-        jogadorEncontrado.nome = nome;
-        */
+    private async atualizar(criarJogadorDto: CriarJogadorDto): Promise<Jogador> {
+        const { email } = criarJogadorDto;
+        return await this.jogadorModel.findOneAndUpdate({ email }, criarJogadorDto, { new: true }).exec();
     }
 }
