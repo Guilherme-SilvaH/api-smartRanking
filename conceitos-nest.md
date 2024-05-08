@@ -1,25 +1,51 @@
-# Comandos para BAIXAR a dependencia o nestJS
--npm i -g @nestjs/cli
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Comandos para BAIXAR a dependência do NestJS</h1>
+    <ul>
+        <li>npm i -g @nestjs/cli</li>
+    </ul>
 
+    <h1>Comandos para iniciar um projeto NestJS</h1>
+    <ul>
+        <li>Nest new "NOME DO SEU ARQUIVO"</li>
+    </ul>
 
-# Comandos para iniciar um projeto NestJS
--Nest new "NOME DO SEU ARQUIVO"
+    <h1>Comandos para criar módulos no NestJS</h1>
+    <ul>
+        <li>nest g module "Nome do Módulo"</li>
+    </ul>
 
-# Comandos para criar modules no nestJS
-nest g module "Nome do Modulo"
+    <h1>Comando para iniciar o servidor</h1>
+    <ul>
+        <li>npm run start:dev</li>
+    </ul>
 
-# iniciar o servidor
-npm run start:dev
-
-# O que sao controllers
-
-controllers são um dos principais componentes que gerenciam a interação entre as requisições HTTP externas e as respostas que a aplicação fornece. Eles são responsáveis por receber as solicitações, processar os dados necessários (com a ajuda de serviços, se necessário) e retornar uma resposta ao cliente.
-
-Os controllers em NestJS são definidos por classes decoradas com o decorador @Controller, que pode opcionalmente especificar um caminho de rota base para todas as rotas associadas. Dentro de um controller, os métodos são ligados a rotas específicas usando decoradores como @Get, @Post, @Put, @Delete, entre outros, que correspondem aos métodos HTTP.
-
-Um exemplo básico de um controller pode ser assim:
-
-
+    <h1>O que são controllers</h1>
+    <p>Controllers são um dos principais componentes que gerenciam a interação entre as requisições HTTP externas e as respostas que a aplicação fornece. Eles são responsáveis por receber as solicitações, processar os dados necessários (com a ajuda de serviços, se necessário) e retornar uma resposta ao cliente.</p>
+    
+    <h2>Exemplo de Controller Básico</h2>
+    <pre><code class="language-typescript">
 import { Controller, Get } from '@nestjs/common';
 
 @Controller('products')
@@ -29,32 +55,25 @@ export class ProductsController {
     return "Esta é a lista de produtos.";
   }
 }
-Neste exemplo, o controller ProductsController responde a solicitações GET para o caminho /products com uma string simples.
+    </code></pre>
 
-Em resumo, os controllers são fundamentais em NestJS para mapear as rotas de entrada para as ações correspondentes na aplicação, organizando a lógica de entrada de forma clara e mantendo as responsabilidades bem separadas dentro do código.
+    <h1>Comandos para criar um controller</h1>
+    <ul>
+        <li>nest g controller "Nome do controller"</li>
+    </ul>
 
+    <h1>O que são providers em NestJS</h1>
+    <p>Providers são uma parte fundamental do sistema de injeção de dependências do framework. Eles podem ser qualquer coisa que possa ser injetada em um construtor, tipicamente serviços, repositórios, fábricas, ajudantes, e assim por diante.</p>
 
-# Comando para criar um controller
-- nest g controller "Nome do controller"
+    <h2>Características dos Providers</h2>
+    <ul>
+        <li>Reusabilidade</li>
+        <li>Encapsulamento</li>
+        <li>Injeção de Dependência</li>
+    </ul>
 
-
-# o que sao providers em nestJS
-
-providers são uma parte fundamental do sistema de injeção de dependências do framework. Eles podem ser qualquer coisa que possa ser injetada em um construtor, tipicamente serviços, repositórios, fábricas, ajudantes, e assim por diante. O conceito de provider é amplamente utilizado para permitir um design limpo e modular, onde as dependências entre diferentes partes da aplicação são gerenciadas de forma controlada e eficiente.
-
-Características dos Providers:
-Reusabilidade: Os providers são projetados para serem reutilizáveis em diferentes partes da aplicação.
-Encapsulamento: Encapsulam a lógica de negócios e a interação com modelos ou outras fontes de dados.
-Injeção de Dependência: NestJS usa a injeção de dependência para manter a aplicação fácil de manter e escalar. Providers podem depender de outros providers e são injetados onde são necessários, sem necessidade de instanciá-los manualmente.
-Tipos Comuns de Providers:
-Serviços: Classes com métodos que contêm lógica de negócios, frequentemente usados para abstrair o acesso a dados ou operações complexas.
-Repositórios: Especializados em operações de dados, podem ser considerados um tipo de serviço que lida especificamente com a persistência.
-Fábricas: Funções que criam e retornam uma instância de uma classe ou um valor.
-Helpers: Funções ou classes auxiliares que fornecem funcionalidades específicas que não estão diretamente relacionadas às lógicas de negócios ou de dados, mas são usadas por elas.
-Exemplo de um Provider em NestJS:
-Aqui está um exemplo básico de um serviço que funciona como um provider em uma aplicação NestJS:
-
-
+    <h2>Exemplo de um Provider em NestJS</h2>
+    <pre><code class="language-typescript">
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -69,25 +88,26 @@ export class UserService {
     return this.users.find(user => user.id === id);
   }
 }
-Registrando Providers:
-Você pode registrar providers de várias maneiras em NestJS, geralmente dentro do módulo onde serão usados:
+    </code></pre>
 
-typescript
-Copy code
+    <h1>Como registrar e usar Providers</h1>
+    <p>Os Providers podem ser registrados em módulos específicos e posteriormente injetados em controllers, outros providers ou qualquer classe onde sejam necessários.</p>
+
+    <h2>Exemplo de registro de um Provider em um módulo</h2>
+    <pre><code class="language-typescript">
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Module({
   providers: [UserService],
-  exports: [UserService]
+  exports: [UserService] // Opcional: se o provider deve ser acessível em outros módulos
 })
 export class UserModule {}
-Uso dos Providers:
-Providers podem ser injetados em controllers, outros providers, ou em qualquer classe onde sejam necessários:
+    </code></pre>
 
-typescript
-Copy code
-import { Controller, Get, Param } from '@nestjs/common';
+    <h2>Utilização de Providers em um Controller</h2>
+    <pre><code class="language-typescript">
+import { Controller, Get } from '@nestjs/common';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -104,22 +124,20 @@ export class UserController {
     return this.userService.findById(id);
   }
 }
-Em resumo, os providers são componentes cruciais em uma aplicação NestJS, pois permitem que as diferentes partes do sistema se comuniquem de forma desacoplada e eficiente.
+    </code></pre>
 
+    <h1>O que são services em NestJS</h1>
+    <p>Services são um tipo especial de provider responsáveis por encapsular a lógica de negócios da aplicação, agindo como intermediários entre os controllers e as fontes de dados ou outras operações de backend.</p>
 
-# o que sao providers em nestJS
+    <h2>Características Principais dos Services</h2>
+    <ul>
+        <li>Separação de Responsabilidades</li>
+        <li>Reusabilidade</li>
+        <li>Testabilidade</li>
+    </ul>
 
- os services são um tipo especial de provider responsáveis por encapsular a lógica de negócios da aplicação, agindo como intermediários entre os controllers (que recebem e respondem às requisições) e as fontes de dados ou outras operações de backend, como acesso a APIs externas, manipulação de dados complexa, entre outros. A utilização de services permite uma separação clara de responsabilidades dentro da aplicação, facilitando a manutenção e o teste do código.
-
-# Características Principais:
-  Separação de Responsabilidades: Isolam a lógica de negócios das demais camadas, como a camada de apresentação (controllers) e a camada de acesso a dados (repositories).
-  Reusabilidade: Podem ser reutilizados em várias partes da aplicação.
-  Testabilidade: Facilitam a realização de testes unitários, visto que a lógica de negócios está isolada em serviços que podem ser facilmente mockados ou substituídos em   testes.
-
-# Exemplo Básico de um Service:
-  Suponha um serviço que gerencia informações de usuários:
-
-
+    <h2>Exemplo Básico de um Service</h2>
+    <pre><code class="language-typescript">
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -134,11 +152,13 @@ export class UserService {
     return this.users.find(user => user.id === id);
   }
 }
+    </code></pre>
 
-# Registro e Injeção:
-  Services são geralmente registrados em um módulo específico de NestJS e podem ser injetados em controllers ou outros services através do mecanismo de injeção de dependência  do framework. Por exemplo:
+    <h2>Registro e Injeção de Services</h2>
+    <p>Services são geralmente registrados em módulos específicos e podem ser injetados em controllers ou outros services através do mecanismo de injeção de dependência do framework.</p>
 
-
+    <h2>Exemplo de registro de um Service em um módulo</h2>
+    <pre><code class="language-typescript">
 import { Module } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
@@ -148,15 +168,12 @@ import { UserController } from './user.controller';
   providers: [UserService]
 })
 export class UserModule {}
+    </code></pre>
 
-
-
-# Utilização em um Controller:
-  Um controller pode injetar esse service para gerenciar dados de usuários, como mostrado abaixo:
-
+    <h2>Utilização de Services em um Controller</h2>
+    <pre><code class="language-typescript">
 import { Controller, Get, Param } from '@nestjs/common';
 import { UserService } from './user.service';
-
 
 @Controller('users')
 export class UserController {
@@ -172,16 +189,52 @@ export class UserController {
     return this.userService.findById(id);
   }
 }
+    </code></pre>
 
-# Conclusão:
-  Services em NestJS são essenciais para manter a lógica de negócios organizada, testável e modular. Eles são uma peça central na arquitetura do framework, permitindo que a  aplicação seja escalável e fácil de manter ao longo do tempo.
+    <h1>Comandos para criar um Service</h1>
+    <ul>
+        <li>nest g service "Nome do Service"</li>
+    </ul>
 
-# Criar um Service
-nest g service "nome do Service"
+    <h1>O que são Pipes</h1>
+    <p>Pipes em NestJS são utilizados para a validação, transformação ou manipulação dos dados de entrada antes que eles alcancem os manipuladores de rota (controllers) ou serviços. Eles são uma parte essencial do pipeline de manipulação de requisições HTTP.</p>
 
+    <h2>Tipos de Pipes</h2>
+    <ul>
+        <li>Pipes de validação</li>
+        <li>Pipes de transformação</li>
+        <li>Pipes de execução</li>
+    </ul>
 
-# Intalar o mongoose atraves do Nest
-npm install @nestjs/mongoose mongoose 
+    <h2>Como usar Pipes em NestJS</h2>
+    <p>Os pipes podem ser aplicados em nível de controlador (controller-wide), em nível de rota (route-specific) ou em nível de parâmetro de rota (parameter-level).</p>
 
-# Intalar types do mongoose
-npm install --save-dev @types/mongoose
+    <h2>Exemplo de uso de Pipes</h2>
+    <pre><code class="language-typescript">
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { CreateCatDto } from './create-cat.dto';
+import { CatsService } from './cats.service';
+import { Cat } from './interfaces/cat.interface';
+
+@Controller('cats')
+export class CatsController {
+  constructor(private readonly catsService: CatsService) {}
+
+  @Post()
+  async create(@Body() createCatDto: CreateCatDto) {
+    this.catsService.create(createCatDto);
+  }
+
+  @Get()
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string): Promise<Cat> {
+    return this.catsService.findOne(id);
+  }
+}
+    </code></pre>
+</body>
+</html>

@@ -8,7 +8,6 @@ import { Jogador } from './interfaces/jogador.interface';
 export class JogadoresController {
 
     constructor(private readonly jogadoresService: JogadoresService){}
-
     @Post()
     //metodo
     async criarAtualizarJogador(
@@ -16,7 +15,6 @@ export class JogadoresController {
         @Body() criaJogadorDto: CriarJogadorDto){
             await this.jogadoresService.criarAtualizarJogador(criaJogadorDto)
     } 
-
     
     @Get()
     async consultarJogadores(
