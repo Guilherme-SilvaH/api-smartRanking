@@ -2,7 +2,7 @@
 import { Document } from "mongoose";
 
 export interface Jogador extends Document{
-   readonly phoneNumber: string;
+   readonly telefoneCelular: string;
    readonly email: string;
    nome: string;
    ranking: string;

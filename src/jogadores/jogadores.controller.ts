@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import { CriarJogadorDto } from './dtos/criar-jogador.dto';
 import { JogadoresService } from './jogadores.service';
 import { Jogador } from './interfaces/jogador.interface';
-import { query } from 'express';
+
 
 @Controller('api/v1/jogadores')
 export class JogadoresController {

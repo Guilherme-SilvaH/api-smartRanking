@@ -1,29 +1,31 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable,Logger,NotFoundException } from '@nestjs/common';
 import { CriarJogadorDto } from './dtos/criar-jogador.dto';
 import { Jogador } from './interfaces/jogador.interface';
-import {v4 as uuidv4} from 'uuid'
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { promises } from 'dns';
+
 
 
 
 @Injectable()
 export class JogadoresService {
-    constructor(@InjectModel('Jogador') private readonly jogadorModel: Model<Jogador>){}
+
+    constructor(@InjectModel('Jogador') private readonly jogadorModel: Model<Jogador>) {}
+ 
+
 
     //metodo
-    async criarAtualizarJogador(CriaJogadorDto: CriarJogadorDto): Promise<void>{
-        const { email } = CriaJogadorDto
-        //const jogadorEncontrado = this.jogadores.find(jogador => jogador.email === email)
-        const jogadorEncontrado = this.jogadorModel.findOne({ email }).exec();
-        if(jogadorEncontrado){
-            this.atualizar(CriaJogadorDto)
-        }else{
-            this.criar(CriaJogadorDto)
+    async criarAtualizarJogador(criaJogadorDto: CriarJogadorDto): Promise<void> {
+        const { email } = criaJogadorDto;
+
+        const jogadorEncontrado = await this.jogadorModel.findOne({ email }).exec();
+
+        if (jogadorEncontrado) {
+            await this.atualizar(criaJogadorDto);
+        } else {
+            await this.criar(criaJogadorDto);
         }
     }
-
     //metodo
     async consultarTodosJogadores(): Promise<Jogador[]>{
         //return this.jogadores
@@ -39,7 +41,7 @@ export class JogadoresService {
     }
 
 
-    async deletarJogador(email): Promise<any>{
+    async deletarJogador(email: string): Promise<any>{
         /*
         const jogadorEncontrado = this.jogadores.find(jogador => jogador.email === email)
         this.jogadores = this.jogadores.filter(jogador => jogador.email !== jogadorEncontrado.email)
@@ -48,10 +50,10 @@ export class JogadoresService {
     }
 
     //aqui vamos criar o jogador completo, preenchendo os dados que o backend preenche sozinho, e os dados que o usuario preenche(nome,phoneNumber,email)
-    private  async criar(criaJogadorDto: CriarJogadorDto) : Promise<Jogador>{   //recebemos como paramentro criaJogadorDto que é do tipo CriarJogadorDto
-        
-        const jogadorCriado = new this.jogadorModel(criaJogadorDto)
+    private async criar(criaJogadorDto: CriarJogadorDto): Promise<Jogador> {
+        const jogadorCriado = new this.jogadorModel(criaJogadorDto);
         return await jogadorCriado.save();
+        
         
         
         //Codigo antes de conectar com o banco
@@ -75,8 +77,8 @@ export class JogadoresService {
     }
         */
     }
-    private async atualizar(criarJogadorDto: CriarJogadorDto): Promise<Jogador> {
-        const { email } = criarJogadorDto;
-        return await this.jogadorModel.findOneAndUpdate({ email }, criarJogadorDto, { new: true }).exec();
+    private async atualizar(criaJogadorDto: CriarJogadorDto): Promise<Jogador> {
+        const { email } = criaJogadorDto;
+        return await this.jogadorModel.findOneAndUpdate({ email }, criaJogadorDto, { new: true }).exec();
     }
 }
