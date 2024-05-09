@@ -5,6 +5,7 @@ import { Jogador } from './interfaces/jogador.interface';
 import { jogadoresValidacaoParametrosPipe } from './pipes/jogadores-validacao-parametros.pipe';
 
 
+
 @Controller('api/v1/jogadores')
 export class JogadoresController {
 
@@ -30,7 +31,7 @@ export class JogadoresController {
         //@BODY = cria um body para extrair um obj da req com a estancia "criaJogadorDto" que é do tipo "CriarJogadorDto"
         @Body() criaJogadorDto: CriarJogadorDto,
         @Param('_id', jogadoresValidacaoParametrosPipe) _id: string): Promise<void>{
-            await this.jogadoresService.atualizarJogador(criaJogadorDto)
+            await this.jogadoresService.atualizarJogador(_id,criaJogadorDto)
     } 
     
 
