@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 
 export const CategoriaSchema = new mongoose.Schema({
-    categroaia: {type: String, unique: true},
+    categoria: {type: String, unique: true},
     descricao: {type: String},
     eventos: [
         {
