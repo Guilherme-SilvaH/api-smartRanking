@@ -41,4 +41,14 @@ export class CategoriasService {
 
         return categoriaEncontrada
     } 
+
+    async atualizarCategoria(categoria: string, atualizarCategoriaDto): Promise<void>{
+        const categoriaEncontrada = await this.categoriaModel.findOne({categoria}).exec()
+
+        if(!categoriaEncontrada){
+            throw new NotFoundException(`Categoria ${categoria} não encontrada`)
+        }
+
+        await this.categoriaModel.findOneAndUpdate({categoria},{$set: atualizarCategoriaDto}).exec()
+    }
 }
