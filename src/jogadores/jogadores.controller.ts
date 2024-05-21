@@ -3,7 +3,7 @@ import { CriarJogadorDto } from './dtos/criar-jogador.dto';
 import { AtualizarJogadorDto } from './dtos/atualizar-jogador.dto'
 import { JogadoresService } from './jogadores.service';
 import { Jogador } from './interfaces/jogador.interface';
-import { jogadoresValidacaoParametrosPipe } from './pipes/jogadores-validacao-parametros.pipe';
+import { ValidacaoParametrosPipe } from '../common/pipes/validacao-parametros.pipe';
 
 
 
@@ -28,7 +28,7 @@ export class JogadoresController {
     async atualizarJogador(
         //@BODY = cria um body para extrair um obj da req com a estancia "criaJogadorDto" que é do tipo "CriarJogadorDto"
         @Body() atualizarJogadorDto: AtualizarJogadorDto,
-        @Param('_id', jogadoresValidacaoParametrosPipe) _id: string): Promise<void>{
+        @Param('_id', ValidacaoParametrosPipe) _id: string): Promise<void>{
             await this.jogadoresService.atualizarJogador(_id, atualizarJogadorDto)
     } 
     
@@ -43,7 +43,7 @@ export class JogadoresController {
     //Get que retorna o jogador pelo ID, ele recebe um parametro pela URL que é o _ID
     @Get('/:_id')
     async consultarJogadoresPeloId(
-        @Param('_id', jogadoresValidacaoParametrosPipe) _Id: string): Promise<Jogador>{//@param é usado para acessar parâmetros de rota em controladores.
+        @Param('_id', ValidacaoParametrosPipe) _Id: string): Promise<Jogador>{//@param é usado para acessar parâmetros de rota em controladores.
             return await this.jogadoresService.consultarJogadorPeloId(_Id)
     } 
 
@@ -52,7 +52,7 @@ export class JogadoresController {
     //Deleta um Jogador atraves do email passado como paramentro
     @Delete('/:_id')
     async deletarJogador(
-        @Param('_id', jogadoresValidacaoParametrosPipe ) _id: string): Promise<void>{
+        @Param('_id',  ValidacaoParametrosPipe ) _id: string): Promise<void>{
             this.jogadoresService.deletarJogador(_id)
         }
 }   
