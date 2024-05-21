@@ -44,7 +44,7 @@ export class JogadoresController {
     @Get('/:_id')
     async consultarJogadoresPeloId(
         @Param('_id', jogadoresValidacaoParametrosPipe) _Id: string): Promise<Jogador>{//@param é usado para acessar parâmetros de rota em controladores.
-            return await this.jogadoresService.consultarJogadoresPeloId(_Id)
+            return await this.jogadoresService.consultarJogadorPeloId(_Id)
     } 
 
 
