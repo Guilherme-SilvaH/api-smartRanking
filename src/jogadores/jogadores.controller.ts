@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
 import { CriarJogadorDto } from './dtos/criar-jogador.dto';
 import { AtualizarJogadorDto } from './dtos/atualizar-jogador.dto'
 import { JogadoresService } from './jogadores.service';
@@ -17,7 +17,9 @@ export class JogadoresController {
     //metodo
     async criarJogador(
         //cria um body para extrair um obj da req com a estancia "criaJogadorDto" que é do tipo "CriarJogadorDto"
-        @Body() criarJogadorDto: CriarJogadorDto): Promise<Jogador>{
+        @Body() criarJogadorDto: CriarJogadorDto): Promise<Jogador>
+        
+    {
             return await this.jogadoresService.criarJogador(criarJogadorDto)
     }
 
