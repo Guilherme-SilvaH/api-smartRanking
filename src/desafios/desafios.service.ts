@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Desafio } from "./interfaces/desafios.interface";
@@ -15,14 +15,34 @@ export class desafiosService{
         private readonly jogadoresService: JogadoresService){}
     
     //metodo
-    async criarDesafio(criarDesafioDto: criarDesafioDto, params: string[]): Promise<Desafio>{
-        const idJogador = params['idJogador']
+    async criarDesafio(criarDesafioDto: criarDesafioDto): Promise<Desafio> {
+        const { jogadores, solicitante } = criarDesafioDto;
 
-        await this.jogadoresService.consultarJogadorPeloId(idJogador)
+        // Verificar se os jogadores informados estão cadastrados no banco de dados
+        const jogadoresIds = jogadores.map(jogador => jogador._id);
+        const jogadoresEncontrados = await Promise.all(
+            jogadoresIds.map(async id => {
+                try {
+                    return await this.jogadoresService.consultarJogadorPeloId(id);
+                } catch (error) {
+                    return null; // Se não encontrar, retorna null
+                }
+            })
+        );
 
-        const desafioCriado = new this.desafioModel(criarDesafioDto)
-        return await desafioCriado.save()
+        if (jogadoresEncontrados.includes(null)) {
+            throw new NotFoundException(`Um ou mais jogadores não foram encontrados`);
+        }
+
+        // Verificar se o solicitante é um dos jogadores do desafio
+        const solicitanteId = solicitante._id;
+        const isSolicitanteValid = jogadoresIds.includes(solicitanteId);
+
+        if (!isSolicitanteValid) {
+            throw new BadRequestException(`O solicitante deve ser um dos jogadores do desafio`);
+        }
+
+        const desafioCriado = new this.desafioModel(criarDesafioDto);
+        return await desafioCriado.save();
     }
-
-
 }

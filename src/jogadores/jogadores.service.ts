@@ -46,7 +46,6 @@ export class JogadoresService {
 
     //metodo
     async consultarTodosJogadores(): Promise<Jogador[]>{
-        //return this.jogadores
         return await this.jogadorModel.find().exec();
     }
 

@@ -14,10 +14,9 @@ export class desafiosController{
     @Post()
     @UsePipes(ValidationPipe)
     async criarDesafios( 
-        @Body() criarDesafio: criarDesafioDto,
-        @Param() params: string[]): Promise<Desafio>
+        @Body() criarDesafio: criarDesafioDto): Promise<Desafio>
         {
-            return await this.desafiosService.criarDesafio(criarDesafio,params)
+            return await this.desafiosService.criarDesafio(criarDesafio)
         }
 
 
