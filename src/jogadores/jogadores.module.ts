@@ -8,6 +8,6 @@ import { JogadorSchema } from './interfaces/jogador.schema';
   imports: [MongooseModule.forFeature([{ name: 'Jogador', schema: JogadorSchema}])],
   controllers: [JogadoresController],
   providers: [JogadoresService],
-  exports: [JogadoresService]
+  exports: [MongooseModule.forFeature([{ name: 'Jogador', schema: JogadorSchema }]), JogadoresService],
 })
 export class JogadoresModule {}
