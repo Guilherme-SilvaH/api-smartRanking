@@ -4,7 +4,6 @@ import { DesafioStatus } from './desafios-status.enum'
 
 
 export interface Desafio extends Document{
-
     dataHoraDesafio: Date,
     status: DesafioStatus,
     dataHoraSolicitacao: Date,

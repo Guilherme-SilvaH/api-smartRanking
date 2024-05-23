@@ -8,7 +8,7 @@ import { AtualizarCategoriaDto } from './dtos/atualizar-categoria.dto';
 
 @Controller('api/v1/categorias')
 export class CategoriasController {
-
+    
     constructor(private readonly categoriasService: CategoriasService){}
 
 
