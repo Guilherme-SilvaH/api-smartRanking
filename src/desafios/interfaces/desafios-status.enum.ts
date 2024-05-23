@@ -1,7 +1,4 @@
 
-
-
-
 export enum DesafioStatus{
 
     REALIZADO = ' REALIZADO ',

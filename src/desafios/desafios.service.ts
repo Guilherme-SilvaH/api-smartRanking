@@ -16,10 +16,9 @@ export class desafiosService{
     //metodo
   async criarDesafio(criarDesafioDto: criarDesafioDto): Promise<Desafio> {
 
-
     const jogadores = await this.jogadoresService.consultarTodosJogadores()
 
-    criarDesafioDto.jogadores.map(jogadorDto => {
+    criarDesafioDto.jogadores.forEach(jogadorDto => {
         const jogadorFilter = jogadores.filter( jogador => jogador._id == jogadorDto._id )
 
         if (jogadorFilter.length == 0) {
@@ -28,9 +27,20 @@ export class desafiosService{
     
     })
 
+    
 
+    const { solicitante  } = criarDesafioDto
+    const solicitanteID = solicitante._id
 
+   
+    const solicitanteEhJogador = criarDesafioDto.jogadores.some(jogadorDto => jogadorDto._id == solicitanteID);
+    if (!solicitanteEhJogador) {
+        throw new BadRequestException(`O Solicitante ${solicitanteID} nao faz Parte do desafio`);
+    }
+
+    
         const desafioCriado = new this.desafioModel(criarDesafioDto);
         return await desafioCriado.save();
+
     }
 }
