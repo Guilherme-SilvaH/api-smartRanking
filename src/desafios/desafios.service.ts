@@ -35,10 +35,12 @@ export class desafiosService{
 
     
 
+
+    //variaveis para pegar o solitante e o ID do Mesmo
     const { solicitante  } = criarDesafioDto
     const solicitanteID = solicitante._id
 
-   
+   //function para ver se o solicitante é um Jogador
     const solicitanteEhJogador = criarDesafioDto.jogadores.some(jogadorDto => jogadorDto._id == solicitanteID);
     if (!solicitanteEhJogador) {
         this.logger.error(`O solicitante ${solicitanteID} não faz parte do desafio`);
@@ -54,8 +56,7 @@ export class desafiosService{
                 categoriaDoSolicitante = categoria.categoria;
             }
         });
-      
-
+        
     if (!categoriaDoSolicitante) {
         this.logger.error(`O solicitante ${solicitanteID} não está registrado em nenhuma categoria`);
         throw new BadRequestException(`O Solicitante ${solicitanteID} não está registrado em nenhuma categoria`);
@@ -64,15 +65,29 @@ export class desafiosService{
     
     // Adicionar a data/hora da solicitação do desafio e definir o status como PENDENTE
     const statusDesafio = DesafioStatus.PENDENTE;
-
     const desafioCriado = new this.desafioModel({
         ...criarDesafioDto,
         status: statusDesafio,
         categoria: categoriaDoSolicitante,
+        dataHoraSolicitacao: new Date()
     });
-    await desafioCriado.save();
+   
 
     this.logger.log(`Desafio criado com sucesso: ${JSON.stringify(desafioCriado)}`);
-    return desafioCriado;
+    return await desafioCriado.save();
+    }
+
+
+    async consultarTodosDesafios(): Promise<Array<Desafio>>{
+        return await this.desafioModel.find()
+        .populate("solicitante")
+        .populate("jogadores")
+        .populate("partida")
+        .exec()
+    }
+
+
+    async consultarDesafiosDeUmJogador(_id: any): Promise<Array<Desafio>>{
+        
     }
 }
