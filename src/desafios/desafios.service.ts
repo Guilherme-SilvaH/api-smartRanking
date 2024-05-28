@@ -21,7 +21,7 @@ export class desafiosService{
     
     
     //metodo
-  async criarDesafio(criarDesafioDto: criarDesafioDto): Promise<Desafio> {
+    async criarDesafio(criarDesafioDto: criarDesafioDto): Promise<Desafio> {
 
     const jogadores = await this.jogadoresService.consultarTodosJogadores()
 
@@ -88,6 +88,26 @@ export class desafiosService{
 
 
     async consultarDesafiosDeUmJogador(_id: any): Promise<Array<Desafio>>{
-        
+
+        const jogadores = await this.jogadoresService.consultarTodosJogadores()
+
+        const jogadoresFilter = jogadores.filter( jogador => jogador._id == _id)
+
+        if(jogadoresFilter.length == 0){
+            throw new BadRequestException(`O id ${_id} não é um jogador!`)
+        }
+
+
+        /*
+        Aqui vamos fazer passasr alguma query para o metodo do mongoose find
+        */
+        return await this.desafioModel.find()
+        .where('jogadores')//busca no array de jogadores
+        .in(_id)//o que ele vai buscar? o ID
+        .populate("ssolicitante")// aqui ele vai popular o restante das infomaçoes
+        .populate("jogadores")// aqui ele vai popular o restante das infomaçoes
+        .populate("partida")// aqui ele vai popular o restante das infomaçoes
+        .exec()
+
     }
 }
