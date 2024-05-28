@@ -6,6 +6,7 @@ import { criarDesafioDto } from "./dtos/criarDesafioDto";
 import { JogadoresService } from "src/jogadores/jogadores.service";
 import { CategoriasService } from "src/categorias/categorias.service";
 import { DesafioStatus } from "./interfaces/desafios-status.enum";
+import { AtualizarDesafioDto } from "./dtos/atualizar-desafio.dto";
 
 
 @Injectable()
@@ -110,4 +111,27 @@ export class desafiosService{
         .exec()
 
     }
+
+
+    async atualizarDesafio(_id: string, atualizarDesafioDto: AtualizarDesafioDto): Promise<void>{
+
+        const desafioEncontrado = await this.desafioModel.findById(_id).exec()
+        
+        if(!desafioEncontrado){
+            throw new NotFoundException(`Desafio ${_id} não encontrado!`)
+
+        }
+        /*
+            Atualizaremos a data da resposata quando o satus do desafio vier preenchido
+       */
+        if(atualizarDesafioDto.status){
+            desafioEncontrado.dataHoraRespota = new Date()
+        }
+
+        desafioEncontrado.status = atualizarDesafioDto.status
+        desafioEncontrado.dataHoraDesafio = atualizarDesafioDto.dataHoraDesafio
+
+        await this.desafioModel.findOneAndUpdate({_id}, {$set: desafioEncontrado}).exec()
+
+    } 
 }
