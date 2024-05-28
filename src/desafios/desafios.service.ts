@@ -113,10 +113,10 @@ export class desafiosService{
     }
 
 
-    async atualizarDesafio(_id: string, atualizarDesafioDto: AtualizarDesafioDto): Promise<void>{
+    async atualizarDesafio(_id: string, atualizarDesafioDto: AtualizarDesafioDto): Promise<Desafio>{
 
         const desafioEncontrado = await this.desafioModel.findById(_id).exec()
-        
+
         if(!desafioEncontrado){
             throw new NotFoundException(`Desafio ${_id} não encontrado!`)
 
@@ -131,7 +131,10 @@ export class desafiosService{
         desafioEncontrado.status = atualizarDesafioDto.status
         desafioEncontrado.dataHoraDesafio = atualizarDesafioDto.dataHoraDesafio
 
-        await this.desafioModel.findOneAndUpdate({_id}, {$set: desafioEncontrado}).exec()
+       const desafioAtualizado = await this.desafioModel.findOneAndUpdate({_id}, {$set: desafioEncontrado}, { new: true } ).exec()
+
+        this.logger.log(`Status Atualizado com sucesso: ${JSON.stringify(desafioEncontrado)}`);
+        return desafioAtualizado;
 
     } 
 }

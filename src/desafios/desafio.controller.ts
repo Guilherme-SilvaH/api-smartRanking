@@ -30,13 +30,13 @@ export class desafiosController{
     }
 
 
-    @Put('/:desfaio')
+    @Put('/:desafio')
     async atualizarDesafio(
         @Body(DesafioStatusValidacaoPipe) atualizarDesafioDto: AtualizarDesafioDto,
         @Param('desafio') _id: string): Promise<void>{
             await this.desafiosService.atualizarDesafio(_id, atualizarDesafioDto)
         }
-    )
+    
 
 
 
