@@ -189,7 +189,7 @@ export class desafiosService{
         Recuperamos o ID da partida e atribuimos ao desafio
         */
         
-        desafioEncontrado.partida = resultado._id
+        desafioEncontrado.partida = resultado.id
 
         try {
         await this.desafioModel.findOneAndUpdate({_id},{$set: desafioEncontrado}).exec() 
@@ -210,7 +210,6 @@ export class desafiosService{
         if (!desafioEncontrado) {
             throw new BadRequestException(`Desafio ${_id} não cadastrado!`)
         }
-        
         /*
         Realizaremos a deleção lógica do desafio, modificando seu status para
         CANCELADO
