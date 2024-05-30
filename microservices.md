@@ -17,8 +17,6 @@ No entanto, os microsserviços também introduzem desafios, como complexidade na
 Em resumo, os microsserviços são uma abordagem arquitetural que prioriza a modularidade, flexibilidade e escalabilidade, permitindo o desenvolvimento e implantação de aplicações de software complexas e distribuídas de maneira mais eficiente e resiliente.
 
 
-
-
 ## Como fazer essa implemtação usando nestJS
 
     ----- NestJS MicroServices
