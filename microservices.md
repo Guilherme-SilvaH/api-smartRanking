@@ -42,4 +42,58 @@ Em resumo, os microsserviços são uma abordagem arquitetural que prioriza a mod
                                                     
                                                     -------->       MICROSERVICE
                                                     <--------
-                        
+
+
+## Entendimentos Inicias de MicroServices
+
+    --- Facilitarr a implementação de novas features, uma vez que teremos dominios de negocio exclusivos em cada microservice
+
+    --- Autotonomia para nosso componentes de modo que possamos desenvolver e publicar serviços de forma independente 
+
+    --- Aumentar a capacidade de escalabilidade horizontal e balanceamento de carga
+    
+    --- Maior Resiliencia Tolerancia a falhas 
+
+
+## NestJS e o package microservies
+
+    --- Temos dois tipos de Nest Transportes
+        --- Broker-based: Redis, NATS, RabbitMQ, MQTT E Kafka
+        --- Point to Point: TCP e gRPC
+
+
+
+        ## Broker-Base
+
+            --- Nos permite desacoplar varios componentes da aplicaçao. Cada componenete somente precisa se conectar 
+            ao broker, e pode permanecer sem necessidade de conhecer a existencia, localização ou detalhes da iplmentação de outros componentes
+
+                -- A unica coisa que precisa ser compartilhada entre os componentes é o protocolo de mensagens
+
+
+
+                    --- Um Broker se divide em: 
+
+                            --- Broker Server: Processo do lado servidor, responsavel por gerenciar a publicação, assinatura e entrega das mensagens aos clientes
+
+                            --- Broker client Api: é disponibilizada em um package especifico para cada linguagem (Javascript, ja,Go, ETC), Fornecendo uma API para acessasr o broker, a partir de aplicações clientes.
+
+
+
+
+        ## Estilo do modelo de comunicação: "Event" sao os tipos de mensagens que podemos trocar com base nesse modelo 
+            (Publish/Subscribe)             ----- Event Emitter = Componente que publica uma mensagem com um tópico (e um payload Opcional)
+                                                    trata-se de uma message publisher
+
+                                            ---- Event subscriber 
+                                                        --- Componente que registra o interesse em um topoico e recebe as mensagens(Encaminha pelo broker)
+                                                        quando esta mensagem corresponde a um topico publicado por um emitter 
+
+
+        ## Estilo do modelo de comunicação: Chamaremos de request/Response os tipos de mensagens que podemos trocar com base nesse modelo
+                (REQUEST/RESPONSE)      
+                                            ----- Requestor = Componente que publica uma mensagem que pretende ser tratada como uma request e tambem executa as etapas descritas anteriormente, ou seja, se inscreve em um response topic e inclui este response topic na mensagem publica.
+
+
+
+                                            ---- Responder = Componente que se inscreve em um topic, que pretende tratar como uma incoming request, produz um resultado e publica um response, incluindo o payload recuperado, para o response topic que recebeu na inbound request.
